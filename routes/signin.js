@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const signInControllers = require("../controllers/signIn");
+const signInControllers = require("../controllers/signin");
 
 //GET ALL
-router.post("/", signInControllers.login);
+router.post("/", signInControllers.signin);
 
 module.exports = router;

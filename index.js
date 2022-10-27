@@ -20,7 +20,7 @@ function authenticateToken(req, res, next) {
   // What if no token exists
   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, "tacos", (err, user) => {
     if (err) return res.sendStatus(403);
 
     req.user = user;
@@ -37,7 +37,9 @@ app.use("/signup", signupRouter);
 app.use("/users", authenticateToken, usersRouter);
 app.use("/todos", authenticateToken, todosRouter);
 
-//
+app.get("/", (req, res) => {
+  res.send("This is not the API you're looking for.");
+});
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);

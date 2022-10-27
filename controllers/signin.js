@@ -2,22 +2,19 @@ const pool = require("../sql/connection");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-require("dotenv").config();
-
 function generateToken(user) {
-  return jwt.sign(user, process.env.JWT_SECRET);
+  return jwt.sign(user, "tacos");
 }
 
-const login = async (req, res) => {
+const signin = async (req, res) => {
   const { name, password, email } = req.body;
 
-  // find a user that matches that name
-  // const user = people.find((user) => user.name === name);
-  console.log({ email, password });
   pool.query(
     `SELECT * FROM users WHERE email = '${email}'`,
     async function (err, results, fields) {
-      console.log(results);
+      if (err) {
+        console.error(err);
+      }
       const match = await bcrypt.compare(password, results[0].password);
 
       if (match) {
@@ -31,5 +28,5 @@ const login = async (req, res) => {
 };
 
 module.exports = {
-  login,
+  signin,
 };
