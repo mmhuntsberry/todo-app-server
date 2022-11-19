@@ -19,7 +19,7 @@ const signin = async (req, res) => {
 
       if (match) {
         const token = generateToken(results[0]);
-        res.json(token);
+        res.json({ token, user: req.user });
       } else {
         res.sendStatus(403);
       }

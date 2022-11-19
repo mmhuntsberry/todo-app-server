@@ -7,12 +7,12 @@ const pool = require("../sql/connection");
 // };
 
 const list = (req, res) => {
-  console.log({ req });
+  // console.log({ req });
   pool.query(
     `SELECT * FROM todos WHERE user_id = ${Number(req.user.id)}`,
     function (err, results, fields) {
-      console.log({ results });
-      res.json(results); // results contains rows returned by server
+      // console.log({ results });
+      res.json({ results, user: req.user }); // results contains rows returned by server
     }
   );
 };
@@ -27,6 +27,7 @@ const show = (req, res) => {
 };
 
 const create = (req, res) => {
+  console.log({ heere: req.body });
   pool.query(
     `INSERT INTO todos (id, todo, user_id) VALUES (?, ?, ?)`,
     [null, req.body.todo, req.body.user_id],
